@@ -33,8 +33,8 @@ make clean; make OPT="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
-	$RPM_BUILD_ROOT/{var/{log/iptraf,lib/iptraf}}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
+install -d $RPM_BUILD_ROOT/{var/{log/iptraf,state/iptraf}}
 
 install -s src/iptraf $RPM_BUILD_ROOT%{_sbindir}
 install -s src/cfconv $RPM_BUILD_ROOT%{_sbindir}
@@ -54,6 +54,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc {Documentation/*txt,README.*,CHANGES,WHATELSE}.gz
 
 %attr(755,root,root) %{_sbindir}/*
-%attr(750,root,root) %dir /var/lib/iptraf
+%attr(750,root,root) %dir /var/state/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
 %{_mandir}/man8/*
