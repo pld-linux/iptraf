@@ -1,6 +1,6 @@
-diff -urN iptraf-2.4.0.org/Documentation/iptraf.8 iptraf-2.4.0/Documentation/iptraf.8
---- iptraf-2.4.0.org/Documentation/iptraf.8	Tue Mar 20 23:46:44 2001
-+++ iptraf-2.4.0/Documentation/iptraf.8	Tue Mar 20 23:46:51 2001
+diff -Nur iptraf-2.6.0.org/Documentation/iptraf.8 iptraf-2.6.0/Documentation/iptraf.8
+--- iptraf-2.6.0.org/Documentation/iptraf.8	Mon Mar 18 09:05:19 2002
++++ iptraf-2.6.0/Documentation/iptraf.8	Wed May  1 13:30:34 2002
 @@ -86,7 +86,7 @@
  
  .SH FILES
@@ -10,9 +10,9 @@ diff -urN iptraf-2.4.0.org/Documentation/iptraf.8 iptraf-2.4.0/Documentation/ipt
  
  .SH SEE ALSO
   Documentation/* - complete documentation written by the author
-diff -urN iptraf-2.4.0.org/Documentation/rvnamed.8 iptraf-2.4.0/Documentation/rvnamed.8
---- iptraf-2.4.0.org/Documentation/rvnamed.8	Tue Mar 20 23:46:44 2001
-+++ iptraf-2.4.0/Documentation/rvnamed.8	Tue Mar 20 23:46:51 2001
+diff -Nur iptraf-2.6.0.org/Documentation/rvnamed.8 iptraf-2.6.0/Documentation/rvnamed.8
+--- iptraf-2.6.0.org/Documentation/rvnamed.8	Mon Mar 13 13:03:59 2000
++++ iptraf-2.6.0/Documentation/rvnamed.8	Wed May  1 13:30:34 2002
 @@ -11,7 +11,7 @@
  This program is only used by iptraf and, therefore, is useless alone.
  
@@ -22,10 +22,10 @@ diff -urN iptraf-2.4.0.org/Documentation/rvnamed.8 iptraf-2.4.0/Documentation/rv
  
  .SH SEE ALSO
  README.rvnamed - documentation from the author
-diff -urN iptraf-2.4.0.org/src/Makefile iptraf-2.4.0/src/Makefile
---- iptraf-2.4.0.org/src/Makefile	Tue Mar 20 23:46:44 2001
-+++ iptraf-2.4.0/src/Makefile	Tue Mar 20 23:47:26 2001
-@@ -22,7 +22,7 @@
+diff -Nur iptraf-2.6.0.org/src/Makefile iptraf-2.6.0/src/Makefile
+--- iptraf-2.6.0.org/src/Makefile	Wed Apr 24 05:30:44 2002
++++ iptraf-2.6.0/src/Makefile	Wed May  1 13:31:02 2002
+@@ -32,7 +32,7 @@
  # options to be passed to the compiler.  I don't believe they need to be
  # modified (except for -m486 on non-Intel x86 platforms).
  
@@ -34,7 +34,7 @@ diff -urN iptraf-2.4.0.org/src/Makefile iptraf-2.4.0/src/Makefile
  DIRS		= -DWORKDIR=\"$(WORKDIR)\" \
  		  -DLOGDIR=\"$(LOGDIR)\" -DEXECDIR=\"$(TARGET)\"
  LDOPTS		= #-static
-@@ -59,12 +59,12 @@
+@@ -69,12 +69,12 @@
  # installation target directory.  The iptraf and rvnamed programs get
  # stored here.  iptraf also exec's rvnamed from this directory.
  
@@ -49,18 +49,18 @@ diff -urN iptraf-2.4.0.org/src/Makefile iptraf-2.4.0/src/Makefile
  
  # The IPTraf log file directory.  IPTraf log files are placed here.
  # This definition overrides dirs.h
-@@ -80,7 +80,7 @@
+@@ -90,7 +90,7 @@
  # DO NOT MAKE THIS POINT TO AN EXISTING/SYSTEM DIRECTORY!!!!  THE
  # LOCK OVERRIDE (iptraf -f) WILL ERASE FILES HERE!
- 
+ #*****************************************************************
 -LOCKDIR		= /var/run/iptraf
 +LOCKDIR		= /var/run
  
  #####################################################################
  ############### IPTRAF COMPILATION AND LINK RULES
-diff -urN iptraf-2.4.0.org/src/dirs.h iptraf-2.4.0/src/dirs.h
---- iptraf-2.4.0.org/src/dirs.h	Tue Mar 20 23:46:44 2001
-+++ iptraf-2.4.0/src/dirs.h	Tue Mar 20 23:53:50 2001
+diff -Nur iptraf-2.6.0.org/src/dirs.h iptraf-2.6.0/src/dirs.h
+--- iptraf-2.6.0.org/src/dirs.h	Thu May  3 12:44:11 2001
++++ iptraf-2.6.0/src/dirs.h	Wed May  1 13:30:34 2002
 @@ -26,7 +26,7 @@
   */
   
