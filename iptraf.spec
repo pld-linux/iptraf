@@ -3,8 +3,8 @@ Summary(es):	Herramienta para verificación de redes desde consolas
 Summary(pl):	IPTraf s³u¿y do monitorowania sieci
 Summary(pt_BR):	Ferramenta baseada no console para monitoração de rede
 Name:		iptraf
-Version:	2.5.0
-Release:	3
+Version:	2.6.0
+Release:	0.1
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
@@ -49,7 +49,7 @@ o Linux que mostra informações sobre o tráfego IP.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 
 %build
 cd src
