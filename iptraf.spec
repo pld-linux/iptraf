@@ -42,6 +42,7 @@ Obs³uguje standardy : Ethernet i PPP/SLIP.
 
 %build
 cd src
+make clean
 make
 
 %install
