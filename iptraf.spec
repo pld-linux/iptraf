@@ -11,7 +11,6 @@ License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
 Patch0:		%{name}.patch
-Patch1:		%{name}-debian.patch
 Icon:		iptraf.gif
 URL:		http://cebu.mozcom.com/riker/iptraf/
 BuildRequires:	ncurses-devel >= 5.0
@@ -64,7 +63,6 @@ SLIP/PPP.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1
 
 %build
 cd src
