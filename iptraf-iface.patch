@@ -1,0 +1,16 @@
+--- iptraf/src/ifaces.c~   Sat Mar  1 11:36:07 2003
++++ iptraf/src/ifaces.c    Sat Mar  1 11:36:07 2003
+@@ -32,14 +32,14 @@
+ #include "error.h"
+
+ extern int accept_unsupported_interfaces;
+-#define NUM_SUPPORTED_IFACES 20
++#define NUM_SUPPORTED_IFACES 21
+
+ extern int daemonized;
+
+ char ifaces[][6] =
+     { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
+       "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
+-      "pent", "lec" };
++      "pent", "lec", "tun" };
