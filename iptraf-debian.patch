@@ -54,14 +54,14 @@
  #include "links.h"
  
 -#define NUM_SUPPORTED_IFACES 11
-+#define NUM_SUPPORTED_IFACES 12
++#define NUM_SUPPORTED_IFACES 13
  
  extern int daemonized;
  
  char ifaces[NUM_SUPPORTED_IFACES][6] =
      { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
 -      "pvc", "hdlc" };
-+      "pvc", "hdlc", "wvlan" };
++      "pvc", "hdlc", "wvlan" , "tun" };
  
  char *ltrim(char *buf)
  {
