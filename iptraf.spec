@@ -1,8 +1,8 @@
 Summary:	IPTraf is a console-based network monitoring program
-Summary(pl):	IPTraf s³u¿y do monitorowania sieci.
+Summary(pl):	IPTraf s³u¿y do monitorowania sieci
 Name:		iptraf
-Version:	2.1.1
-Release:	3
+Version:	2.2.0
+Release:	1
 License:	GPL
 Group:		Networking/Utilities
 Group(pl):	Sieciowe/Narzêdzia
@@ -47,18 +47,15 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
-install -d $RPM_BUILD_ROOT/var/{log/iptraf,lib/iptraf}
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
+	$RPM_BUILD_ROOT/var/{log/iptraf,lib/iptraf}
 
-install -s src/iptraf $RPM_BUILD_ROOT%{_sbindir}
-install -s src/cfconv $RPM_BUILD_ROOT%{_sbindir}
-install -s src/rvnamed $RPM_BUILD_ROOT%{_sbindir}
+install -s src/{iptraf,cfconv,rvnamed} $RPM_BUILD_ROOT%{_sbindir}
 
-install Documentation/iptraf.8 $RPM_BUILD_ROOT%{_mandir}/man8
-install Documentation/rvnamed.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install Documentation/{iptraf,rvnamed}.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 gzip -9nf README* CHANGES \
-	$RPM_BUILD_ROOT%{_mandir}/man8/*.8
+	$RPM_BUILD_ROOT%{_mandir}/man8/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
