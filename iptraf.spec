@@ -2,14 +2,15 @@ Summary:	IPTraf is a console-based network monitoring program
 Summary(es):	Herramienta para verificaciСn de redes desde consolas
 Summary(pl):	IPTraf sЁu©y do monitorowania sieci
 Summary(pt_BR):	Ferramenta baseada no console para monitoraГЦo de rede
+Summary(ru):	IPTraf - консольная программа мониторинга сетевого траффика
+Summary(uk):	IPTraf - консольна програма мон╕торингу траф╕ку в мереж╕
 Name:		iptraf
-Version:	2.6.0
-Release:	0.1
+Version:	2.6.1
+Release:	1
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
 Patch0:		%{name}.patch
-Patch1:		%{name}-debian.patch
 Icon:		iptraf.gif
 URL:		http://cebu.mozcom.com/riker/iptraf/
 BuildRequires:	ncurses-devel >= 5.0
@@ -46,10 +47,22 @@ protokoЁami sieciowymi. ObsЁuguje standardy : Ethernet i PPP/SLIP.
 O IPTraf И uma ferramenta de monitoraГЦo baseada no modo console, para
 o Linux que mostra informaГУes sobre o trАfego IP.
 
+%description -l ru
+IPTraf - консольная программа мониторинга сетевого IP-траффика. Ее
+можно использовать, среди прочего, для определения типа траффика в
+вашей сети и того, какой вид сервиса самый используемый на каких
+компьютерах. IPTraf работает с интерфейсами Ethernet и SLIP/PPP.
+
+%description -l uk
+IPTraf - консольна утил╕та мон╕торингу IP-траф╕ку в мереж╕. ╥╖ можна
+використовувати, пом╕ж ╕ншим, для визначення типу траф╕ку у ваш╕й
+мереж╕ ╕ того, який вид серв╕су найб╕льш використову╓ться на
+конкретних комп'ютерах. IPTraf працю╓ з ╕нтерфейсами Ethernet та
+SLIP/PPP.
+
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1
 
 %build
 cd src
