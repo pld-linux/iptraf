@@ -57,13 +57,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(750,root,root) %dir /var/lib/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
 %{_mandir}/man8/*
-
-%changelog
-* Wed Jun 23 1999 Micha³ Kuratczyk <kura@pld.org.pl>
-  [1.3.0-2]
-- more RPM macros
-- gzipping documentation instead bzipping
-
-* Wed Oct 7 1998 Bartek Rozkrut <madey@dione.ids.pl>
-  [1.3.0-1d]
-- First relase as a PLD Tornado package.
