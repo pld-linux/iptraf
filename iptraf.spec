@@ -10,6 +10,7 @@ Release:	3
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
+# Source0-md5:	7ff0bc933a0a57a4ca9e2b0443307539
 Patch0:		%{name}.patch
 Patch1:		%{name}-iface.patch
 Icon:		iptraf.gif
