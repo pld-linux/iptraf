@@ -5,7 +5,7 @@ Summary(pt_BR):	Ferramenta baseada no console para monitoraГЦo de rede
 Summary(ru):	IPTraf - консольная программа мониторинга сетевого траффика
 Summary(uk):	IPTraf - консольна програма мон╕торингу траф╕ку в мереж╕
 Name:		iptraf
-Version:	2.6.1
+Version:	2.7.0
 Release:	1
 License:	GPL
 Group:		Networking/Utilities
