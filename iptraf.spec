@@ -41,11 +41,11 @@ install -s src/iptraf $RPM_BUILD_ROOT/usr/sbin
 install -s src/cfconv $RPM_BUILD_ROOT/usr/sbin
 install -s src/rvnamed $RPM_BUILD_ROOT/usr/sbin
 
-install Documentation/iptraf.8 $RPM_BUILD_ROOT/usr/man/man8
-install Documentation/rvnamed.8 $RPM_BUILD_ROOT/usr/man/man8
+install Documentation/iptraf.8 $RPM_BUILD_ROOT%{_mandir}/man8
+install Documentation/rvnamed.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
 bzip2 -9  Documentation/*txt README.* CHANGES WHATELSE
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man8/*.8
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man8/*.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -55,7 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc Documentation/*txt.bz2 README.* {CHANGES,WHATELSE}.bz2
 
 %attr(755,root,root) /usr/sbin/*
-%attr(644,root, man) /usr/man/man8/*
+%attr(644,root, man) %{_mandir}/man8/*
 %attr(750,root,root) %dir /var/lib/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
 
