@@ -16,7 +16,7 @@ Patch1:		%{name}-iface.patch
 Patch2:		%{name}-vlan.patch
 Icon:		iptraf.gif
 URL:		http://cebu.mozcom.com/riker/iptraf/
-BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	ncurses-ext-devel >= 5.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
