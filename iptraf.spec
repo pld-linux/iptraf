@@ -43,7 +43,7 @@ protoko³ami sieciowymi. Obs³uguje standardy : Ethernet i PPP/SLIP.
 
 %build
 cd src
-make clean
+%{__make} clean
 make
 
 %install
