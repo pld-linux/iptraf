@@ -1,0 +1,194 @@
+diff -durN iptraf-2.7.0.orig/src/hostmon.c iptraf-2.7.0/src/hostmon.c
+--- iptraf-2.7.0.orig/src/hostmon.c	Tue Apr 16 04:15:25 2002
++++ iptraf-2.7.0/src/hostmon.c	Thu Oct 30 09:20:54 2003
+@@ -701,7 +701,7 @@
+     int is_ip;
+     int ch;
+ 
+-    char ifname[8];
++    char ifname[10];
+ 
+     struct timeval tv;
+     unsigned long starttime;
+@@ -855,7 +855,8 @@
+ 	    linktype = getlinktype(fromaddr.sll_hatype, ifname, -1, NULL);
+ 
+ 	    if ((linktype == LINK_ETHERNET) || (linktype == LINK_FDDI)
+-		|| (linktype == LINK_PLIP) || (linktype == LINK_TR)) {
++		|| (linktype == LINK_PLIP) || (linktype == LINK_TR) ||
++	    (linktype == LINK_VLAN)) {
+ 		if (fromaddr.sll_protocol == htons(ETH_P_IP))
+ 		    is_ip = 1;
+ 		else
+@@ -865,7 +866,8 @@
+ 		 * Check source address entry
+ 		 */
+ 
+-		if ((linktype == LINK_ETHERNET) || (linktype == LINK_PLIP)) {
++		if ((linktype == LINK_ETHERNET) || (linktype == LINK_PLIP) ||
++		(linktype == LINK_VLAN)) {
+ 		    memcpy(scratch_saddr,
+ 			   ((struct ethhdr *) buf)->h_source, ETH_ALEN);
+ 		    memcpy(scratch_daddr, ((struct ethhdr *) buf)->h_dest,
+diff -durN iptraf-2.7.0.orig/src/ifaces.c iptraf-2.7.0/src/ifaces.c
+--- iptraf-2.7.0.orig/src/ifaces.c	Thu Oct 30 09:21:22 2003
++++ iptraf-2.7.0/src/ifaces.c	Thu Oct 30 09:20:54 2003
+@@ -32,14 +32,14 @@
+ #include "error.h"
+ 
+ extern int accept_unsupported_interfaces;
+-#define NUM_SUPPORTED_IFACES 23
++#define NUM_SUPPORTED_IFACES 24
+ 
+ extern int daemonized;
+ 
+ char ifaces[][6] =
+     { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
+       "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
+-      "pent", "lec", "cipcb", "tunl", "bond" };
++      "pent", "lec", "cipcb", "tunl", "bond", "vlan" };
+ 
+ char *ltrim(char *buf)
+ {
+diff -durN iptraf-2.7.0.orig/src/ifstats.c iptraf-2.7.0/src/ifstats.c
+--- iptraf-2.7.0.orig/src/ifstats.c	Sat May 11 09:38:28 2002
++++ iptraf-2.7.0/src/ifstats.c	Thu Oct 30 09:20:54 2003
+@@ -130,7 +130,7 @@
+ {
+     FILE *fd;
+     char buf[161];
+-    char ifname[8];
++    char ifname[10];
+     struct iflist *itmp = NULL;
+     struct iflist *tail = NULL;
+     unsigned int index = 0;
+@@ -757,7 +757,7 @@
+     unsigned int iphlen;
+     unsigned int sport, dport;
+ 
+-    char ifname[8];
++    char ifname[10];
+     struct sockaddr_ll fromaddr;
+     unsigned short linktype;
+     
+diff -durN iptraf-2.7.0.orig/src/ifstats.h iptraf-2.7.0/src/ifstats.h
+--- iptraf-2.7.0.orig/src/ifstats.h	Tue May  7 04:45:57 2002
++++ iptraf-2.7.0/src/ifstats.h	Thu Oct 30 09:20:54 2003
+@@ -6,7 +6,7 @@
+ ***/
+ 
+ struct iflist {
+-    char ifname[8];
++    char ifname[10];
+     unsigned int encap;
+     unsigned long long iptotal;
+     unsigned long badtotal;
+diff -durN iptraf-2.7.0.orig/src/itrafmon.c iptraf-2.7.0/src/itrafmon.c
+--- iptraf-2.7.0.orig/src/itrafmon.c	Wed May  8 03:42:30 2002
++++ iptraf-2.7.0/src/itrafmon.c	Thu Oct 30 09:20:54 2003
+@@ -591,7 +591,7 @@
+     int curwin = 0;
+ 
+     int readlen;
+-    char ifname[8];
++    char ifname[10];
+ 
+     unsigned long long total_pkts = 0;
+     
+diff -durN iptraf-2.7.0.orig/src/links.h iptraf-2.7.0/src/links.h
+--- iptraf-2.7.0.orig/src/links.h	Thu Oct 30 09:21:22 2003
++++ iptraf-2.7.0/src/links.h	Thu Oct 30 09:20:54 2003
+@@ -11,5 +11,6 @@
+ #define LINK_DLCI		10
+ #define LINK_TR			11
+ #define LINK_IPIP		12
++#define LINK_VLAN		13
+ #define LINK_INVALID		0
+ 
+diff -durN iptraf-2.7.0.orig/src/othptab.h iptraf-2.7.0/src/othptab.h
+--- iptraf-2.7.0.orig/src/othptab.h	Thu Jun  7 12:28:27 2001
++++ iptraf-2.7.0/src/othptab.h	Thu Oct 30 09:20:54 2003
+@@ -42,7 +42,7 @@
+     int s_fstat;
+     int d_fstat;
+     unsigned int protocol;
+-    char iface[8];
++    char iface[10];
+     unsigned int pkt_length;
+   
+     union {
+diff -durN iptraf-2.7.0.orig/src/packet.c iptraf-2.7.0/src/packet.c
+--- iptraf-2.7.0.orig/src/packet.c	Thu Oct 30 09:21:22 2003
++++ iptraf-2.7.0/src/packet.c	Thu Oct 30 09:18:55 2003
+@@ -98,6 +98,8 @@
+             result = LINK_ETHERNET;
+ 	else if (strncmp(ifname, "lec", 3) == 0)
+ 	    result = LINK_ETHERNET;
++	else if (strncmp(ifname, "vlan", 4) == 0)
++	    result = LINK_VLAN;
+ 	else if ((strncmp(ifname, "isdn", 4) == 0) && (isdn_fd != -1)) {
+ 	    isdnent = isdn_table_lookup(isdnlist, ifname, isdn_fd);
+ 
+@@ -162,8 +164,13 @@
+     case LINK_ETHERNET:
+     case LINK_LOOPBACK:
+     case LINK_PLIP:
+-	*packet = tpacket + ETH_HLEN;
+-	*readlen -= ETH_HLEN;
++	if (((unsigned char *)tpacket)[12]==0x81 && ((unsigned char *)tpacket)[13]==0x00){ 
++		*packet = tpacket + 18; // Maybe I should use here VLAN_ETH_HLEN instead of 18
++		*readlen -= 18;
++	} else {
++		*packet = tpacket + ETH_HLEN;
++		*readlen -= ETH_HLEN;
++	}
+ 
+ 	/*
+ 	 * Move IP data into an aligned buffer.  96 bytes should be sufficient
+@@ -185,6 +192,10 @@
+ 	*packet = tpacket + 4;
+ 	*readlen -= 4;
+ 	break;
++    case LINK_VLAN:
++	 *packet = tpacket + 18; // Maybe I should use here VLAN_ETH_HLEN instead of 18
++	*readlen -= 18;
++	break;
+     case LINK_FDDI:
+ 	*packet = tpacket + sizeof(struct fddihdr);
+ 	*readlen -= sizeof(struct fddihdr);
+diff -durN iptraf-2.7.0.orig/src/promisc.h iptraf-2.7.0/src/promisc.h
+--- iptraf-2.7.0.orig/src/promisc.h	Wed Apr  5 09:15:15 2000
++++ iptraf-2.7.0/src/promisc.h	Thu Oct 30 09:20:54 2003
+@@ -9,7 +9,7 @@
+  */
+ 
+ struct promisc_params {
+-    char ifname[8];
++    char ifname[10];
+     int saved_state;
+     int state_valid;
+ };
+diff -durN iptraf-2.7.0.orig/src/serv.c iptraf-2.7.0/src/serv.c
+--- iptraf-2.7.0.orig/src/serv.c	Sun May 19 13:25:02 2002
++++ iptraf-2.7.0/src/serv.c	Thu Oct 30 09:20:54 2003
+@@ -699,7 +699,7 @@
+     unsigned short linktype;
+     int br;
+ 
+-    char iface[8];
++    char iface[10];
+     unsigned int idx = 1;
+ 
+     unsigned int sport = 0;
+diff -durN iptraf-2.7.0.orig/src/tcptable.h iptraf-2.7.0/src/tcptable.h
+--- iptraf-2.7.0.orig/src/tcptable.h	Fri Dec 28 03:16:39 2001
++++ iptraf-2.7.0/src/tcptable.h	Thu Oct 30 09:20:54 2003
+@@ -64,7 +64,7 @@
+     unsigned long finack;
+     int partial;
+     int finsent;
+-    char ifname[8];
++    char ifname[10];
+     unsigned int index;
+     int reused;
+     int timedout;
