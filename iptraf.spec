@@ -78,15 +78,13 @@ install src/{iptraf,cfconv,rvnamed} $RPM_BUILD_ROOT%{_sbindir}
 
 install Documentation/{iptraf,rvnamed}.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
-gzip -9nf README* CHANGES RELEASE*
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
-%doc Documentation/*.{gif,html}
+%doc README* CHANGES RELEASE*
+%doc Documentation/*.{html,png}
 %attr(755,root,root) %{_sbindir}/*
 %attr(750,root,root) %dir /var/lib/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
