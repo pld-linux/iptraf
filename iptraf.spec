@@ -1,8 +1,10 @@
 Summary:	IPTraf is a console-based network monitoring program
+Summary(es):	Herramienta para verificación de redes desde consolas
 Summary(pl):	IPTraf s³u¿y do monitorowania sieci
+Summary(pt_BR):	Ferramenta baseada no console para monitoração de rede
 Name:		iptraf
 Version:	2.5.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
@@ -32,10 +34,17 @@ FDDI, ISDN, SLIP, PPP, and loopback interfaces; and utilization of the
 built-in raw socket interface of the Linux kernel, so it can be used
 on a wide variety of supported network cards.
 
+%description -l es
+Herramienta para verificación de redes desde consolas.
+
 %description -l pl
 IPTraf jest narzêdziem s³u¿±cym do monitorowania sieci. Posiada
 kolorowy, prosty w obs³udze interfejs. Wspó³pracuje z wieloma
 protoko³ami sieciowymi. Obs³uguje standardy : Ethernet i PPP/SLIP.
+
+%description -l pt_BR
+O IPTraf é uma ferramenta de monitoração baseada no modo console, para
+o Linux que mostra informações sobre o tráfego IP.
 
 %prep
 %setup -q
