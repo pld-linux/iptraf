@@ -1,7 +1,7 @@
 Summary:	IPTraf is a console-based network monitoring program
 Summary(pl):	IPTraf s³u¿y do monitorowania sieci
 Name:		iptraf
-Version:	2.3.0
+Version:	2.3.1
 Release:	1
 License:	GPL
 Group:		Networking/Utilities
