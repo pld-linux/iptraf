@@ -1,14 +1,16 @@
 Summary:	IPTraf is a console-based network monitoring program
 Summary(pl):	IPTraf s³u¿y do monitorowania sieci.
 Name:		iptraf
-Version:	1.3.0
-Release:	3
+Version:	2.1.1
+Release:	1
 Copyright:	GPL
-URL:		http://cebu.mozcom.com/riker/iptraf/
-Source:		ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
-Patch:		%{name}-pld.patch
 Group:		Networking
 Group(pl):	Sieciowe
+Source:		ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
+Patch:		iptraf.patch
+URL:		http://cebu.mozcom.com/riker/iptraf/
+BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	ncurses-ext
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -29,7 +31,7 @@ Obs³uguje standardy : Ethernet i PPP/SLIP.
 
 %build
 cd src
-make clean; make OPT="$RPM_OPT_FLAGS"
+make
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -43,16 +45,16 @@ install -s src/rvnamed $RPM_BUILD_ROOT%{_sbindir}
 install Documentation/iptraf.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install Documentation/rvnamed.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
-gzip -9nf Documentation/*txt README.* CHANGES WHATELSE
-gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man8/*.8
+gzip -9nf README* CHANGES \
+	$RPM_BUILD_ROOT%{_mandir}/man8/*.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {Documentation/*txt,README.*,CHANGES,WHATELSE}.gz
-
+%doc {README*,CHANGES}.gz
+%doc Documentation/*.{gif,html}
 %attr(755,root,root) %{_sbindir}/*
 %attr(750,root,root) %dir /var/state/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
