@@ -12,7 +12,7 @@ Icon:		iptraf.gif
 URL:		http://cebu.mozcom.com/riker/iptraf/
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	ncurses-ext
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 IPTraf is a console-based network monitoring utility. IPTraf gathers data
