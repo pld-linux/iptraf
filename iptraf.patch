@@ -1,0 +1,51 @@
+diff -Nru iptraf-2.1.1/Documentation/iptraf.8 iptraf-2.1.1.new/Documentation/iptraf.8
+--- iptraf-2.1.1/Documentation/iptraf.8	Sun Sep  5 06:29:14 1999
++++ iptraf-2.1.1.new/Documentation/iptraf.8	Fri Nov 19 09:26:18 1999
+@@ -80,7 +80,7 @@
+ 
+ .SH FILES
+  /var/log/iptraf/*.log - log file
+- /var/local/iptraf/* - important IPTraf data files
++ /var/state/iptraf/* - important IPTraf data files
+ 
+ .SH SEE ALSO
+  Documentation/* - complete documentation written by the author
+diff -Nru iptraf-2.1.1/Documentation/rvnamed.8 iptraf-2.1.1.new/Documentation/rvnamed.8
+--- iptraf-2.1.1/Documentation/rvnamed.8	Mon Mar 15 14:26:53 1999
++++ iptraf-2.1.1.new/Documentation/rvnamed.8	Fri Nov 19 09:26:31 1999
+@@ -11,7 +11,7 @@
+ This program is only used by iptraf and, therefore, is useless alone.
+ 
+ .SH FILES
+- /var/local/iptraf/rvnamed.log - log file
++ /var/log/iptraf/rvnamed.log - log file
+ 
+ .SH SEE ALSO
+ README.rvnamed - documentation from the author
+diff -Nru iptraf-2.1.1/src/Makefile iptraf-2.1.1.new/src/Makefile
+--- iptraf-2.1.1/src/Makefile	Sat Oct 16 17:44:36 1999
++++ iptraf-2.1.1.new/src/Makefile	Fri Nov 19 09:25:35 1999
+@@ -17,7 +17,7 @@
+ # options to be passed to the compiler.  I don't believe they need to be
+ # modified (except for -m486 on non-Intel x86 platforms).
+ 
+-CFLAGS		= -Wall -O2 #-m486
++CFLAGS		= $(RPM_OPT_FLAGS)
+ DIRS		= -DWORKDIR=\"$(WORKDIR)\" \
+ 		  -DLOGDIR=\"$(LOGDIR)\" -DEXECDIR=\"$(TARGET)\"
+ LDOPTS		= #-static
+@@ -54,12 +54,12 @@
+ # installation target directory.  The iptraf and rvnamed programs get
+ # stored here.  iptraf also exec's rvnamed from this directory.
+ 
+-TARGET		= /usr/local/bin
++TARGET		= /usr/bin
+ 
+ # The IPTraf working directory; if you change this.  Starting with this
+ # version, this definition overrides dirs.h.
+ 
+-WORKDIR		= /var/local/iptraf
++WORKDIR		= /var/state/iptraf
+ 
+ # The IPTraf log file directory.  IPTraf log files are placed here.
+ # Starting with this version, this definition overrides dirs.h
