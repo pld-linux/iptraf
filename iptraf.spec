@@ -44,7 +44,7 @@ protoko³ami sieciowymi. Obs³uguje standardy : Ethernet i PPP/SLIP.
 %build
 cd src
 %{__make} clean
-make
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
