@@ -6,7 +6,7 @@ diff -Nru iptraf-2.1.1/Documentation/iptraf.8 iptraf-2.1.1.new/Documentation/ipt
  .SH FILES
   /var/log/iptraf/*.log - log file
 - /var/local/iptraf/* - important IPTraf data files
-+ /var/state/iptraf/* - important IPTraf data files
++ /var/lib/iptraf/* - important IPTraf data files
  
  .SH SEE ALSO
   Documentation/* - complete documentation written by the author
@@ -45,7 +45,7 @@ diff -Nru iptraf-2.1.1/src/Makefile iptraf-2.1.1.new/src/Makefile
  # version, this definition overrides dirs.h.
  
 -WORKDIR		= /var/local/iptraf
-+WORKDIR		= /var/state/iptraf
++WORKDIR		= /var/lib/iptraf
  
  # The IPTraf log file directory.  IPTraf log files are placed here.
  # Starting with this version, this definition overrides dirs.h
