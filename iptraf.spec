@@ -2,7 +2,7 @@ Summary:	IPTraf is a console-based network monitoring program
 Summary(pl):	IPTraf s³u¿y do monitorowania sieci.
 Name:		iptraf
 Version:	2.1.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Utilities
 Group(pl):	Sieciowe/Narzêdzia
@@ -48,7 +48,7 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8}
-install -d $RPM_BUILD_ROOT/var/{log/iptraf,state/iptraf}
+install -d $RPM_BUILD_ROOT/var/{log/iptraf,lib/iptraf}
 
 install -s src/iptraf $RPM_BUILD_ROOT%{_sbindir}
 install -s src/cfconv $RPM_BUILD_ROOT%{_sbindir}
@@ -68,6 +68,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc {README*,CHANGES}.gz
 %doc Documentation/*.{gif,html}
 %attr(755,root,root) %{_sbindir}/*
-%attr(750,root,root) %dir /var/state/iptraf
+%attr(750,root,root) %dir /var/lib/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
 %{_mandir}/man8/*
