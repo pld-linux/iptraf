@@ -1,12 +1,14 @@
 Summary:	IPTraf is a console-based network monitoring program
 Summary(pl):	IPTraf s³u¿y do monitorowania sieci
 Name:		iptraf
-Version:	2.4.0
-Release:	2
+Version:	2.5.0
+Release:	1
 License:	GPL
 Group:		Networking/Utilities
 Group(de):	Netzwerkwesen/Werkzeuge
+Group(es):	Red/Utilitarios
 Group(pl):	Sieciowe/Narzêdzia
+Group(pt_BR):	Rede/Utilitários
 Source0:	ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
 Patch0:		%{name}.patch
 Patch1:		%{name}-debian.patch
@@ -41,7 +43,7 @@ protoko³ami sieciowymi. Obs³uguje standardy : Ethernet i PPP/SLIP.
 
 %prep
 %setup -q
-%patch -p1
+%patch0 -p1
 %patch1 -p1
 
 %build
