@@ -2,12 +2,11 @@ Summary:	IPTraf is a console-based network monitoring program
 Summary(pl):	IPTraf s³u¿y do monitorowania sieci.
 Name:		iptraf
 Version:	1.3.0
-Release:	2d
-#######		ftp://ftp.cebu.mozcom.com/pub/linux/net/
-Source:		%{name}-%{version}.tar.gz
-Patch:		%{name}-pld.patch
-URL:		http://cebu.mozcom.com/riker/iptraf/
+Release:	3
 Copyright:	GPL
+URL:		http://cebu.mozcom.com/riker/iptraf/
+Source:		ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
+Patch:		%{name}-pld.patch
 Group:		Networking
 Group(pl):	Sieciowe
 Buildroot:	/tmp/%{name}-%{version}-root
@@ -34,9 +33,9 @@ make clean; make OPT="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
+	$RPM_BUILD_ROOT/{var/{log/iptraf,lib/iptraf}}
 
-install -d $RPM_BUILD_ROOT/usr/{sbin,man/man8}
-install -d $RPM_BUILD_ROOT/{var/{log/iptraf,lib/iptraf}}
 install -s src/iptraf $RPM_BUILD_ROOT%{_sbindir}
 install -s src/cfconv $RPM_BUILD_ROOT%{_sbindir}
 install -s src/rvnamed $RPM_BUILD_ROOT%{_sbindir}
@@ -44,22 +43,27 @@ install -s src/rvnamed $RPM_BUILD_ROOT%{_sbindir}
 install Documentation/iptraf.8 $RPM_BUILD_ROOT%{_mandir}/man8
 install Documentation/rvnamed.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
-bzip2 -9  Documentation/*txt README.* CHANGES WHATELSE
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man8/*.8
+gzip -9nf Documentation/*txt README.* CHANGES WHATELSE
+gzip -9nf $RPM_BUILD_ROOT%{_mandir}/man8/*.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc Documentation/*txt.bz2 README.* {CHANGES,WHATELSE}.bz2
+%doc {Documentation/*txt,README.*,CHANGES,WHATELSE}.gz
 
 %attr(755,root,root) %{_sbindir}/*
-%{_mandir}/man8/*
 %attr(750,root,root) %dir /var/lib/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
+%{_mandir}/man8/*
 
 %changelog
+* Wed Jun 23 1999 Micha³ Kuratczyk <kura@pld.org.pl>
+  [1.3.0-2]
+- more RPM macros
+- gzipping documentation instead bzipping
+
 * Wed Oct 7 1998 Bartek Rozkrut <madey@dione.ids.pl>
   [1.3.0-1d]
 - First relase as a PLD Tornado package.
