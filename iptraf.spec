@@ -55,7 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc Documentation/*txt.bz2 README.* {CHANGES,WHATELSE}.bz2
 
 %attr(755,root,root) /usr/sbin/*
-%attr(644,root, man) %{_mandir}/man8/*
+%{_mandir}/man8/*
 %attr(750,root,root) %dir /var/lib/iptraf
 %attr(750,root,root) %dir /var/log/iptraf
 
