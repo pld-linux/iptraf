@@ -1,16 +1,63 @@
---- iptraf/src/ifaces.c~   Sat Mar  1 11:36:07 2003
-+++ iptraf/src/ifaces.c    Sat Mar  1 11:36:07 2003
+diff -urN iptraf-2.7.0.org/src/ifaces.c iptraf-2.7.0/src/ifaces.c
+--- iptraf-2.7.0.org/src/ifaces.c	2003-09-16 00:01:34.000000000 +0200
++++ iptraf-2.7.0/src/ifaces.c	2003-09-16 00:02:52.000000000 +0200
 @@ -32,14 +32,14 @@
  #include "error.h"
-
+ 
  extern int accept_unsupported_interfaces;
 -#define NUM_SUPPORTED_IFACES 20
-+#define NUM_SUPPORTED_IFACES 21
-
++#define NUM_SUPPORTED_IFACES 23
+ 
  extern int daemonized;
-
+ 
  char ifaces[][6] =
      { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
        "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
 -      "pent", "lec" };
-+      "pent", "lec", "tun" };
++      "pent", "lec", "cipcb", "tunl", "bond" };
+ 
+ char *ltrim(char *buf)
+ {
+diff -urN iptraf-2.7.0.org/src/links.h iptraf-2.7.0/src/links.h
+--- iptraf-2.7.0.org/src/links.h	2003-09-16 00:01:34.000000000 +0200
++++ iptraf-2.7.0/src/links.h	2003-09-16 00:03:47.000000000 +0200
+@@ -5,9 +5,11 @@
+ #define LINK_LOOPBACK		5
+ #define LINK_ISDN_RAWIP		6
+ #define LINK_ISDN_CISCOHDLC	7
++#define LINK_CISCOHDLC		LINK_ISDN_CISCOHDLC
+ #define LINK_FDDI		8
+ #define LINK_FRAD		9
+ #define LINK_DLCI		10
+ #define LINK_TR			11
++#define LINK_IPIP		12
+ #define LINK_INVALID		0
+ 
+diff -urN iptraf-2.7.0.org/src/packet.c iptraf-2.7.0/src/packet.c
+--- iptraf-2.7.0.org/src/packet.c	2003-09-16 00:01:34.000000000 +0200
++++ iptraf-2.7.0/src/packet.c	2003-09-16 00:05:03.000000000 +0200
+@@ -139,7 +139,13 @@
+         break;
+     case ARPHRD_DLCI:
+         result = LINK_DLCI;
+-        break; 
++        break;
++    case ARPHRD_HDLC:
++	result = LINK_CISCOHDLC;
++	break;
++    case ARPHRD_TUNNEL:
++	result = LINK_IPIP;
++	break; 
+     default:
+ 	result = LINK_INVALID;
+ 	break;
+@@ -209,6 +215,9 @@
+         memmove(aligned_buf, *packet, min(SNAPSHOT_LEN, *readlen));
+         *packet = aligned_buf;
+         break;
++    case LINK_IPIP:
++	*packet = tpacket;
++	break;
+     default:
+ 	*packet = (char *) NULL;	/* return a NULL packet to signal */
+ 	break;			/* an unrecognized link protocol */
