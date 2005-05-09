@@ -1,0 +1,26 @@
+--- iptraf-2.7.0/src/tcptable.h.orig	2005-05-09 11:49:03.000000000 +0200
++++ iptraf-2.7.0/src/tcptable.h	2005-05-09 11:50:28.000000000 +0200
+@@ -19,12 +19,12 @@
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ #include <net/if_arp.h>
++#include <net/if.h>
+ #include <asm/types.h>
+ #include <linux/if_packet.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_fddi.h>
+ #include <linux/if_tr.h>
+-#include <net/if.h>
+ #include <netinet/ip.h>
+ #include <netinet/udp.h>
+ #include "servname.h"
+--- iptraf-2.7.0/src/othptab.c.orig	2005-05-09 11:52:54.000000000 +0200
++++ iptraf-2.7.0/src/othptab.c	2005-05-09 11:52:39.000000000 +0200
+@@ -16,6 +16,7 @@
+ 
+ ***/
+ 
++#include <net/if.h>
+ #include <asm/types.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_tr.h>
