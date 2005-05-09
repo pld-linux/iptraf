@@ -14,6 +14,7 @@ Source0:	ftp://ftp.cebu.mozcom.com/pub/linux/net/%{name}-%{version}.tar.gz
 Patch0:		%{name}.patch
 Patch1:		%{name}-iface.patch
 Patch2:		%{name}-vlan.patch
+Patch3:		%{name}-llh.patch
 Icon:		iptraf.gif
 URL:		http://cebu.mozcom.com/riker/iptraf/
 BuildRequires:	ncurses-ext-devel >= 5.4
@@ -67,11 +68,14 @@ SLIP/PPP.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cd src
 %{__make} clean
-%{__make} TARGET=%{_sbindir}
+%{__make} TARGET=%{_sbindir} \
+	CC="%{__cc}" \
+	RPM_OPT_FLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
