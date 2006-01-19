@@ -37,16 +37,16 @@ diff -durN iptraf-2.7.0.orig/src/ifaces.c iptraf-2.7.0/src/ifaces.c
  #include "error.h"
  
  extern int accept_unsupported_interfaces;
--#define NUM_SUPPORTED_IFACES 23
-+#define NUM_SUPPORTED_IFACES 24
+-#define NUM_SUPPORTED_IFACES 24
++#define NUM_SUPPORTED_IFACES 25
  
  extern int daemonized;
  
  char ifaces[][6] =
      { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
        "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
--      "pent", "lec", "cipcb", "tunl", "bond" };
-+      "pent", "lec", "cipcb", "tunl", "bond", "vlan" };
+-      "pent", "lec", "cipcb", "tunl", "bond", "ath" };
++      "pent", "lec", "cipcb", "tunl", "bond", "ath", "vlan" };
  
  char *ltrim(char *buf)
  {
