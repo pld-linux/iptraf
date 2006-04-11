@@ -6,15 +6,14 @@ Summary(ru):	IPTraf - консольная программа мониторинга сетевого траффика
 Summary(uk):	IPTraf - консольна програма мон╕торингу траф╕ку в мереж╕
 Name:		iptraf
 Version:	3.0.0
-Release:	0.1
+Release:	0.9
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://iptraf.seul.org/pub/iptraf/%{name}-%{version}.tar.gz
 # Source0-md5:	377371c28ee3c21a76f7024920649ea8
 Patch0:		%{name}.patch
 Patch1:		%{name}-iface.patch
-Patch2:		%{name}-vlan.patch
-Patch3:		%{name}-llh.patch
+Patch2:		%{name}-llh.patch
 URL:		http://iptraf.seul.org/
 BuildRequires:	ncurses-ext-devel >= 5.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -67,7 +66,6 @@ SLIP/PPP.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 cd src
@@ -81,7 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sbindir},%{_mandir}/man8} \
 	$RPM_BUILD_ROOT/var/{log/iptraf,lib/iptraf}
 
-install src/{iptraf,cfconv,rvnamed} $RPM_BUILD_ROOT%{_sbindir}
+install src/{iptraf,rawtime,rvnamed} $RPM_BUILD_ROOT%{_sbindir}
 
 install Documentation/{iptraf,rvnamed}.8 $RPM_BUILD_ROOT%{_mandir}/man8
 
@@ -90,7 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README* CHANGES RELEASE*
+%doc CHANGES FAQ README* RELEASE*
 %doc Documentation/*.{html,png}
 %attr(755,root,root) %{_sbindir}/*
 %attr(750,root,root) %dir /var/lib/iptraf
