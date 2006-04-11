@@ -1,72 +1,33 @@
-diff -urN iptraf-2.7.0.org/src/ifaces.c iptraf-2.7.0/src/ifaces.c
---- iptraf-2.7.0.org/src/ifaces.c	2003-09-16 00:01:34.000000000 +0200
-+++ iptraf-2.7.0/src/ifaces.c	2003-09-16 00:02:52.000000000 +0200
+diff -urN iptraf-3.0.0.orig/src/ifaces.c iptraf-3.0.0/src/ifaces.c
+--- iptraf-3.0.0.orig/src/ifaces.c	2005-09-13 08:42:54.000000000 +0200
++++ iptraf-3.0.0/src/ifaces.c	2006-04-11 07:57:37.261675250 +0200
 @@ -32,14 +32,14 @@
  #include "error.h"
  
  extern int accept_unsupported_interfaces;
--#define NUM_SUPPORTED_IFACES 20
-+#define NUM_SUPPORTED_IFACES 24
+-#define NUM_SUPPORTED_IFACES 26
++#define NUM_SUPPORTED_IFACES 28
  
  extern int daemonized;
  
  char ifaces[][6] =
      { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
-       "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
--      "pent", "lec" };
-+      "pent", "lec", "cipcb", "tunl", "bond", "ath" };
+     "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
+-    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan"
++    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan", "bond", "ath"
+ };
  
  char *ltrim(char *buf)
- {
-diff -urN iptraf-2.7.0.org/src/links.h iptraf-2.7.0/src/links.h
---- iptraf-2.7.0.org/src/links.h	2003-09-16 00:01:34.000000000 +0200
-+++ iptraf-2.7.0/src/links.h	2003-09-16 00:03:47.000000000 +0200
-@@ -5,9 +5,11 @@
- #define LINK_LOOPBACK		5
- #define LINK_ISDN_RAWIP		6
- #define LINK_ISDN_CISCOHDLC	7
-+#define LINK_CISCOHDLC		LINK_ISDN_CISCOHDLC
- #define LINK_FDDI		8
- #define LINK_FRAD		9
- #define LINK_DLCI		10
- #define LINK_TR			11
-+#define LINK_IPIP		12
- #define LINK_INVALID		0
- 
-diff -urN iptraf-2.7.0.org/src/packet.c iptraf-2.7.0/src/packet.c
---- iptraf-2.7.0.org/src/packet.c	2003-09-16 00:01:34.000000000 +0200
-+++ iptraf-2.7.0/src/packet.c	2003-09-16 00:05:03.000000000 +0200
-@@ -90,7 +90,7 @@
- 	    result = LINK_ETHERNET;
- 	else if (strncmp(ifname, "ipsec", 5) == 0)
- 	    result = LINK_ETHERNET;
--	else if ((strncmp(ifname, "wvlan", 5) == 0) || (strncmp(ifname, "wlan", 4) == 0))
-+	else if ((strncmp(ifname, "wvlan", 5) == 0) || (strncmp(ifname, "wlan", 4) == 0)|| (strncmp(ifname, "ath", 3) == 0))
- 	    result = LINK_ETHERNET;
-         else if ((strncmp(ifname, "sm2", 3) == 0) || (strncmp(ifname, "sm3", 3) == 0))
+diff -urN iptraf-3.0.0.orig/src/packet.c iptraf-3.0.0/src/packet.c
+--- iptraf-3.0.0.orig/src/packet.c	2005-09-13 08:42:54.000000000 +0200
++++ iptraf-3.0.0/src/packet.c	2006-04-11 08:04:50.208732750 +0200
+@@ -90,7 +90,8 @@
+         else if (strncmp(ifname, "ipsec", 5) == 0)
              result = LINK_ETHERNET;
-@@ -139,7 +139,13 @@
-         break;
-     case ARPHRD_DLCI:
-         result = LINK_DLCI;
--        break; 
-+        break;
-+    case ARPHRD_HDLC:
-+	result = LINK_CISCOHDLC;
-+	break;
-+    case ARPHRD_TUNNEL:
-+	result = LINK_IPIP;
-+	break; 
-     default:
- 	result = LINK_INVALID;
- 	break;
-@@ -209,6 +215,9 @@
-         memmove(aligned_buf, *packet, min(SNAPSHOT_LEN, *readlen));
-         *packet = aligned_buf;
-         break;
-+    case LINK_IPIP:
-+	*packet = tpacket;
-+	break;
-     default:
- 	*packet = (char *) NULL;	/* return a NULL packet to signal */
- 	break;			/* an unrecognized link protocol */
+         else if ((strncmp(ifname, "wvlan", 5) == 0)
+-                 || (strncmp(ifname, "wlan", 4) == 0))
++                 || (strncmp(ifname, "wlan", 4) == 0)
++		 || (strncmp(ifname, "ath", 3) == 0))
+             result = LINK_ETHERNET;
+         else if ((strncmp(ifname, "sm2", 3) == 0)
+                  || (strncmp(ifname, "sm3", 3) == 0))
