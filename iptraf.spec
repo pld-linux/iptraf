@@ -6,7 +6,7 @@ Summary(ru):	IPTraf - консольная программа мониторинга сетевого траффика
 Summary(uk):	IPTraf - консольна програма мон╕торингу траф╕ку в мереж╕
 Name:		iptraf
 Version:	3.0.0
-Release:	0.9
+Release:	1
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://iptraf.seul.org/pub/iptraf/%{name}-%{version}.tar.gz
