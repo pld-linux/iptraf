@@ -1,0 +1,30 @@
+diff -ruN iptraf-3.0.0./src/iptraf.c iptraf-3.0.0/src/iptraf.c
+--- iptraf-3.0.0./src/iptraf.c	2005-09-13 08:42:54.000000000 +0200
++++ iptraf-3.0.0/src/iptraf.c	2006-11-05 20:42:53.316290615 +0100
+@@ -73,7 +73,7 @@
+ int is_first_instance;
+ char active_facility_lockfile[64];
+ char active_facility_countfile[64];
+-int accept_unsupported_interfaces = 0;
++int accept_unsupported_interfaces = 1;
+ char graphing_filter[80];
+ 
+ extern void about();
+@@ -510,7 +510,7 @@
+     if (argc > 1) {
+         do {
+             opterr = 0;
+-            opt = getopt(argc, argv, "i:gd:s:z:l:hfqt:BL:uI:G:F:");
++            opt = getopt(argc, argv, "i:gd:s:z:l:hfqt:BL:uUI:G:F:");
+ 
+             if (opt == 'h') {
+                 commandhelp();
+@@ -537,6 +537,8 @@
+                 /* -q parameter now ignored, maintained for compatibility */
+             } else if (opt == 'u') {
+                 accept_unsupported_interfaces = 1;
++            } else if (opt == 'U') {
++                accept_unsupported_interfaces = 0;
+             } else if (opt == 'I') {
+                 current_log_interval = atoi(optarg);
+                 if (current_log_interval == 0)
