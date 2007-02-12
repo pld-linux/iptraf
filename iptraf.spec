@@ -1,9 +1,9 @@
 Summary:	IPTraf is a console-based network monitoring program
-Summary(es):	Herramienta para verificaciСn de redes desde consolas
-Summary(pl):	IPTraf sЁu©y do monitorowania sieci
-Summary(pt_BR):	Ferramenta baseada no console para monitoraГЦo de rede
-Summary(ru):	IPTraf - консольная программа мониторинга сетевого траффика
-Summary(uk):	IPTraf - консольна програма мон╕торингу траф╕ку в мереж╕
+Summary(es.UTF-8):   Herramienta para verificaciцЁn de redes desde consolas
+Summary(pl.UTF-8):   IPTraf sе┌uе╪y do monitorowania sieci
+Summary(pt_BR.UTF-8):   Ferramenta baseada no console para monitoraц╖цёo de rede
+Summary(ru.UTF-8):   IPTraf - п╨п╬п╫я│п╬п╩я▄п╫п╟я▐ п©я─п╬пЁя─п╟п╪п╪п╟ п╪п╬п╫п╦я┌п╬я─п╦п╫пЁп╟ я│п╣я┌п╣п╡п╬пЁп╬ я┌я─п╟я└я└п╦п╨п╟
+Summary(uk.UTF-8):   IPTraf - п╨п╬п╫я│п╬п╩я▄п╫п╟ п©я─п╬пЁя─п╟п╪п╟ п╪п╬п╫я√я┌п╬я─п╦п╫пЁя┐ я┌я─п╟я└я√п╨я┐ п╡ п╪п╣я─п╣п╤я√
 Name:		iptraf
 Version:	3.0.0
 Release:	2
@@ -37,29 +37,29 @@ FDDI, ISDN, SLIP, PPP, and loopback interfaces; and utilization of the
 built-in raw socket interface of the Linux kernel, so it can be used
 on a wide variety of supported network cards.
 
-%description -l es
-Herramienta para verificaciСn de redes desde consolas.
+%description -l es.UTF-8
+Herramienta para verificaciцЁn de redes desde consolas.
 
-%description -l pl
-IPTraf jest narzЙdziem sЁu©╠cym do monitorowania sieci. Posiada
-kolorowy, prosty w obsЁudze interfejs. WspСЁpracuje z wieloma
-protokoЁami sieciowymi. ObsЁuguje standardy : Ethernet i PPP/SLIP.
+%description -l pl.UTF-8
+IPTraf jest narzд≥dziem sе┌uе╪д┘cym do monitorowania sieci. Posiada
+kolorowy, prosty w obsе┌udze interfejs. WspцЁе┌pracuje z wieloma
+protokoе┌ami sieciowymi. Obsе┌uguje standardy : Ethernet i PPP/SLIP.
 
-%description -l pt_BR
-O IPTraf И uma ferramenta de monitoraГЦo baseada no modo console, para
-o Linux que mostra informaГУes sobre o trАfego IP.
+%description -l pt_BR.UTF-8
+O IPTraf ц╘ uma ferramenta de monitoraц╖цёo baseada no modo console, para
+o Linux que mostra informaц╖ц╣es sobre o trц║fego IP.
 
-%description -l ru
-IPTraf - консольная программа мониторинга сетевого IP-траффика. Ее
-можно использовать, среди прочего, для определения типа траффика в
-вашей сети и того, какой вид сервиса самый используемый на каких
-компьютерах. IPTraf работает с интерфейсами Ethernet и SLIP/PPP.
+%description -l ru.UTF-8
+IPTraf - п╨п╬п╫я│п╬п╩я▄п╫п╟я▐ п©я─п╬пЁя─п╟п╪п╪п╟ п╪п╬п╫п╦я┌п╬я─п╦п╫пЁп╟ я│п╣я┌п╣п╡п╬пЁп╬ IP-я┌я─п╟я└я└п╦п╨п╟. п∙п╣
+п╪п╬п╤п╫п╬ п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄, я│я─п╣п╢п╦ п©я─п╬я┤п╣пЁп╬, п╢п╩я▐ п╬п©я─п╣п╢п╣п╩п╣п╫п╦я▐ я┌п╦п©п╟ я┌я─п╟я└я└п╦п╨п╟ п╡
+п╡п╟я┬п╣п╧ я│п╣я┌п╦ п╦ я┌п╬пЁп╬, п╨п╟п╨п╬п╧ п╡п╦п╢ я│п╣я─п╡п╦я│п╟ я│п╟п╪я▀п╧ п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╧ п╫п╟ п╨п╟п╨п╦я┘
+п╨п╬п╪п©я▄я▌я┌п╣я─п╟я┘. IPTraf я─п╟п╠п╬я┌п╟п╣я┌ я│ п╦п╫я┌п╣я─я└п╣п╧я│п╟п╪п╦ Ethernet п╦ SLIP/PPP.
 
-%description -l uk
-IPTraf - консольна утил╕та мон╕торингу IP-траф╕ку в мереж╕. ╥╖ можна
-використовувати, пом╕ж ╕ншим, для визначення типу траф╕ку у ваш╕й
-мереж╕ ╕ того, який вид серв╕су найб╕льш використову╓ться на
-конкретних комп'ютерах. IPTraf працю╓ з ╕нтерфейсами Ethernet та
+%description -l uk.UTF-8
+IPTraf - п╨п╬п╫я│п╬п╩я▄п╫п╟ я┐я┌п╦п╩я√я┌п╟ п╪п╬п╫я√я┌п╬я─п╦п╫пЁя┐ IP-я┌я─п╟я└я√п╨я┐ п╡ п╪п╣я─п╣п╤я√. п┤я≈ п╪п╬п╤п╫п╟
+п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐п╡п╟я┌п╦, п©п╬п╪я√п╤ я√п╫я┬п╦п╪, п╢п╩я▐ п╡п╦п╥п╫п╟я┤п╣п╫п╫я▐ я┌п╦п©я┐ я┌я─п╟я└я√п╨я┐ я┐ п╡п╟я┬я√п╧
+п╪п╣я─п╣п╤я√ я√ я┌п╬пЁп╬, я▐п╨п╦п╧ п╡п╦п╢ я│п╣я─п╡я√я│я┐ п╫п╟п╧п╠я√п╩я▄я┬ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐я■я┌я▄я│я▐ п╫п╟
+п╨п╬п╫п╨я─п╣я┌п╫п╦я┘ п╨п╬п╪п©'я▌я┌п╣я─п╟я┘. IPTraf п©я─п╟я├я▌я■ п╥ я√п╫я┌п╣я─я└п╣п╧я│п╟п╪п╦ Ethernet я┌п╟
 SLIP/PPP.
 
 %prep
