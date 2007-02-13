@@ -1,9 +1,9 @@
 Summary:	IPTraf is a console-based network monitoring program
-Summary(es.UTF-8):   Herramienta para verificación de redes desde consolas
-Summary(pl.UTF-8):   IPTraf służy do monitorowania sieci
-Summary(pt_BR.UTF-8):   Ferramenta baseada no console para monitoração de rede
-Summary(ru.UTF-8):   IPTraf - консольная программа мониторинга сетевого траффика
-Summary(uk.UTF-8):   IPTraf - консольна програма моніторингу трафіку в мережі
+Summary(es.UTF-8):	Herramienta para verificación de redes desde consolas
+Summary(pl.UTF-8):	IPTraf służy do monitorowania sieci
+Summary(pt_BR.UTF-8):	Ferramenta baseada no console para monitoração de rede
+Summary(ru.UTF-8):	IPTraf - консольная программа мониторинга сетевого траффика
+Summary(uk.UTF-8):	IPTraf - консольна програма моніторингу трафіку в мережі
 Name:		iptraf
 Version:	3.0.0
 Release:	2
