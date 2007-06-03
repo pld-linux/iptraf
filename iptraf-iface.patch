@@ -12,7 +12,7 @@
  char ifaces[][6] =
      { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
      "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
--    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan", "ath"
+-    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan"
 +    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan", "bond", "ath"
  };
  

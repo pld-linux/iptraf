@@ -407,15 +407,6 @@
  #include <fcntl.h>
  #include <string.h>
  #include <linux/if_packet.h>
-@@ -39,7 +39,7 @@
- char ifaces[][6] =
-     { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
-     "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
--    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan"
-+    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan", "ath"
- };
- 
- char *ltrim(char *buf)
 @@ -102,7 +102,7 @@
  int iface_supported(char *iface)
  {
