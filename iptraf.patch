@@ -1,7 +1,111 @@
-diff -Nur iptraf-2.7.0.orig/Documentation/iptraf.8 iptraf-2.7.0/Documentation/iptraf.8
---- iptraf-2.7.0.orig/Documentation/iptraf.8	Sun May 19 20:47:44 2002
-+++ iptraf-2.7.0/Documentation/iptraf.8	Sun May 19 20:48:27 2002
-@@ -86,7 +86,7 @@
+--- iptraf-3.0.0.orig/Documentation/iptraf.8
++++ iptraf-3.0.0/Documentation/iptraf.8
+@@ -2,22 +2,22 @@
+ .SH NAME
+ iptraf \- Interactive Colorful IP LAN Monitor
+ .SH SYNOPSIS
+-.BR iptraf " { [ " -f " ] [ " -q " ] [ { " -i 
++.BR iptraf " { [ " \-f " ] [ " \-q " ] [ " \-u " ] [ { " \-i 
+ .IR iface " | " 
+-.BR -g " | " -d
++.BR \-g " | " \-d
+ .IR iface " | "
+-.BR -s
++.BR \-s
+ .IR iface " | "
+-.BR -z
++.BR \-z
+ .IR iface " | "
+-.BR -l 
++.BR \-l 
+ .IR iface " } [ " 
+-.BR -t
++.BR \-t
+ .IR timeout " ] [ "
+-.BR -B " [ "
+-.BR -L
++.BR \-B " [ "
++.BR \-L
+ .IR logfile " ] ] ] | [ "
+-.BR -h " ] }"
++.BR \-h " ] }"
+ .br
+ .SH DESCRIPTION
+ .B iptraf
+@@ -30,38 +30,38 @@
+ .SH OPTIONS
+ These options can also be supplied to the command:
+ .TP
+-.BI "-i " iface
++.BI "\-i " iface
+ immediately start the IP traffic monitor on the specified interface, or
+-all interfaces if "-i all" is specified
++all interfaces if "\-i all" is specified
+ .TP
+-.B "-g"
++.B "\-g"
+ immediately start the general interface statistics
+ .TP
+-.BI "-d " iface
++.BI "\-d " iface
+ allows you to immediately start the detailed on the indicated interface (iface)
+ .TP
+-.BI "-s " iface
++.BI "\-s " iface
+ allows you to immediately monitor TCP and UDP traffic on the specified interface (iface)
+ .TP
+-.BI "-z " iface
++.BI "\-z " iface
+ shows packet counts by size on the specified interface
+ .TP
+-.BI "-l " iface
++.BI "\-l " iface
+ start the LAN station monitor on the specified interface, or all LAN
+-interfaces if "-l all" is specified
++interfaces if "\-l all" is specified
+ .TP
+-.BI "-t " timeout
++.BI "\-t " timeout
+ tells IPTraf to run the specified facility for only
+ .I timeout
+ minutes.  This option is used only with one of the above parameters.
+ .TP
+-.B "-B"
++.B "\-B"
+ redirect standard output to /dev/null, closes standard input, and forks
+ the program into the background.  Can be used only with one of the
+ facility invocation parameters above.  Send the backgrounded process a
+ USR2 signal to terminate.
+ .TP
+-.B "-L logfile"
++.B "\-L logfile"
+ allows you to specify an alternate log file name.  The default log file
+ name is based on either the interface selected (detailed interface
+ statistics, TCP/UDP service statistics, packet size breakdown), or the
+@@ -69,15 +69,19 @@
+ path is not specified, the log file is placed in
+ .B /var/log/iptraf
+ .TP
+-.B "-f"
++.B "\-f"
+ clears all locks and counters, causing this instance of IPTraf to think
+ it's the first one running.  This should only be used to recover from
+ an abnormal termination or system crash.
+ .TP
+-.BI "-q"
++.B "\-u"
++allow use of unsupported interfaces as ethernet devices.  This is needed if
++you changed the name of an interface (ex: ip link set eth0 name foo0)
++.TP
++.BI "\-q"
+ no longer needed, maintained only for compatibility.
+ .TP
+-.B "-h"
++.B "\-h"
+ shows a command summary
+ .SH SIGNALS
+ 
+@@ -86,7 +90,7 @@
  
  .SH FILES
   /var/log/iptraf/*.log - log file
@@ -10,9 +114,16 @@ diff -Nur iptraf-2.7.0.orig/Documentation/iptraf.8 iptraf-2.7.0/Documentation/ip
  
  .SH SEE ALSO
   Documentation/* - complete documentation written by the author
-diff -Nur iptraf-2.7.0.orig/Documentation/rvnamed.8 iptraf-2.7.0/Documentation/rvnamed.8
---- iptraf-2.7.0.orig/Documentation/rvnamed.8	Sun May 19 20:47:44 2002
-+++ iptraf-2.7.0/Documentation/rvnamed.8	Sun May 19 20:49:00 2002
+@@ -96,6 +100,6 @@
+ Gerard Paul Java (riker@mozcom.com)
+ 
+ .SH MANUAL AUTHOR
+-Frederic Peters (fpeters@debian.org), using iptraf --help
++Frederic Peters (fpeters@debian.org), using iptraf \-h
+ General manual page modifications by Gerard Paul Java (riker@mozcom.com)
+ 
+--- iptraf-3.0.0.orig/Documentation/rvnamed.8
++++ iptraf-3.0.0/Documentation/rvnamed.8
 @@ -11,7 +11,7 @@
  This program is only used by iptraf and, therefore, is useless alone.
  
@@ -22,69 +133,515 @@ diff -Nur iptraf-2.7.0.orig/Documentation/rvnamed.8 iptraf-2.7.0/Documentation/r
  
  .SH SEE ALSO
  README.rvnamed - documentation from the author
-diff -Nur iptraf-2.7.0.orig/src/Makefile iptraf-2.7.0/src/Makefile
---- iptraf-2.7.0.orig/src/Makefile	Sun May 19 20:47:44 2002
-+++ iptraf-2.7.0/src/Makefile	Sun May 19 20:51:38 2002
-@@ -31,7 +31,7 @@
- # options to be passed to the compiler.  I don't believe they need to be
- # modified (except for -m486 on non-Intel x86 platforms).
+--- iptraf-3.0.0.orig/src/ifstats.c
++++ iptraf-3.0.0/src/ifstats.c
+@@ -32,7 +32,7 @@
+ #include <arpa/inet.h>
+ #include <net/if_arp.h>
+ #include <linux/if_packet.h>
+-#include <net/if.h>
++#include <linux/if.h>
+ #include <netinet/ip.h>
+ #include <netinet/tcp.h>
+ #include <netinet/udp.h>
+@@ -129,7 +129,7 @@
+ {
+     FILE *fd;
+     char buf[161];
+-    char ifname[10];
++    char ifname[18];
+     struct iflist *itmp = NULL;
+     struct iflist *tail = NULL;
+     unsigned int index = 0;
+@@ -433,7 +433,7 @@
+     FILE *logfile = NULL;
  
--CFLAGS		= -Wall #-O2 #-m486
-+CFLAGS		= $(RPM_OPT_FLAGS)
- DIRS		= -DWORKDIR=\"$(WORKDIR)\" \
+     int br;
+-    char ifname[10];
++    char ifname[18];
+ 
+     int ch;
+ 
+@@ -760,7 +760,7 @@
+     char *tpacket;
+     unsigned int iphlen;
+ 
+-    char ifname[10];
++    char ifname[18];
+     struct sockaddr_ll fromaddr;
+     unsigned short linktype;
+ 
+--- iptraf-3.0.0.orig/src/iptraf.c
++++ iptraf-3.0.0/src/iptraf.c
+@@ -410,7 +410,7 @@
+ {
+     printf("\nSyntax:\n");
+     printf
+-        ("    iptraf [ -f ] [ { -i iface | -g | -d iface | -s iface | -z iface |\n");
++        ("    iptraf [ -f ] [ -u ] [ { -i iface | -g | -d iface | -s iface | -z iface |\n");
+     printf
+         ("           -l iface } [ -t timeout ] [ -B ] [ -L logfile ] [-I interval] ] \n\n");
+     printf
+@@ -445,6 +445,8 @@
+         ("-f          - clear all locks and counters.  Use with great caution.\n");
+     printf
+         ("              Normally used to recover from an abnormal termination.\n\n");
++    printf
++        ("-u          - allow use of unsupported interfaces as ethernet devices.\n");
+     printf("IPTraf %s Copyright (c) Gerard Paul Java 1997-2004\n",
+            VERSION);
+ }
+@@ -616,6 +618,18 @@
+     freopen("/dev/null", "r", stdin);
+     freopen("/dev/null", "w", stderr);
+ #endif
++    
++    /* Check whether LOCKDIR exists (/var/run is on a tmpfs in Ubuntu) */
++    if(access(LOCKDIR,F_OK) != 0) {
++	if(mkdir(LOCKDIR, 0700) == -1) {
++	    fprintf(stderr, "Cannot create %s: %s", LOCKDIR, strerror(errno));
++	    exit(1);
++        }
++	if(chown(LOCKDIR, 0, 0) == -1) {
++	    fprintf(stderr, "Cannot change owner of %s: %s", LOCKDIR, strerror(errno));
++	    exit(1);
++	}
++    }
+ 
+     initscr();
+ 
+--- iptraf-3.0.0.orig/src/itrafmon.c
++++ iptraf-3.0.0/src/itrafmon.c
+@@ -604,7 +604,7 @@
+     int curwin = 0;
+ 
+     int readlen;
+-    char ifname[10];
++    char ifname[18];
+ 
+     unsigned long long total_pkts = 0;
+ 
+--- iptraf-3.0.0.orig/src/ifstats.h
++++ iptraf-3.0.0/src/ifstats.h
+@@ -6,7 +6,7 @@
+ ***/
+ 
+ struct iflist {
+-    char ifname[8];
++    char ifname[18];
+     unsigned int encap;
+     unsigned long long iptotal;
+     unsigned long badtotal;
+--- iptraf-3.0.0.orig/src/othptab.h
++++ iptraf-3.0.0/src/othptab.h
+@@ -9,14 +9,12 @@
+ #include <malloc.h>
+ #include <string.h>
+ #include <sys/types.h>
+-#include <sys/socket.h>
+-#include <netinet/in.h>
++#include <linux/socket.h>
+ #include <arpa/inet.h>
+ #include <netinet/ip_icmp.h>
+ #include <netinet/udp.h>
+ #include <curses.h>
+ #include <panel.h>
+-#include <netdb.h>
+ #include <linux/if_ether.h>
+ #include "servname.h"
+ #include "addproto.h"
+@@ -42,7 +40,7 @@
+     int s_fstat;
+     int d_fstat;
+     unsigned int protocol;
+-    char iface[8];
++    char iface[18];
+     unsigned int pkt_length;
+ 
+     union {
+--- iptraf-3.0.0.orig/src/tcptable.h
++++ iptraf-3.0.0/src/tcptable.h
+@@ -64,7 +62,7 @@
+     unsigned long finack;
+     int partial;
+     int finsent;
+-    char ifname[8];
++    char ifname[18];
+     unsigned int index;
+     int reused;
+     int timedout;
+--- iptraf-3.0.0.orig/src/Makefile
++++ iptraf-3.0.0/src/Makefile
+@@ -36,6 +36,11 @@
  		  -DLOGDIR=\"$(LOGDIR)\" -DEXECDIR=\"$(TARGET)\"
  LDOPTS		= #-static
-@@ -68,12 +68,12 @@
- # installation target directory.  The iptraf and rvnamed programs get
- # stored here.  iptraf also exec's rvnamed from this directory.
  
--TARGET		= /usr/local/bin
-+TARGET		= /usr/bin
++
++ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
++CFLAGS += -g
++endif
++
+ # you may want to change this to point to your ncurses include directory
+ # if the ncurses include files are not in the default location.
  
- # The IPTraf working directory; if you change this.  Starting with this
- # version, this definition overrides dirs.h.
+@@ -145,7 +150,7 @@
+ # installation rule
  
--WORKDIR		= /var/local/iptraf
-+WORKDIR		= /var/lib/iptraf
+ install:
+-	@./install.sh $(TARGET) $(WORKDIR) $(LOGDIR) $(LOCKDIR)
++	@./install.sh $(TARGET) $(WORKDIR) $(LOGDIR) $(LOCKDIR) $(DESTDIR)
  
- # The IPTraf log file directory.  IPTraf log files are placed here.
- # This definition overrides dirs.h
-@@ -89,7 +89,7 @@
- # DO NOT MAKE THIS POINT TO AN EXISTING/SYSTEM DIRECTORY!!!!  THE
- # LOCK OVERRIDE (iptraf -f) WILL ERASE FILES HERE!
- #*****************************************************************
--LOCKDIR		= /var/run/iptraf
-+LOCKDIR		= /var/run
+ # Upgrade rule
+ #
+--- iptraf-3.0.0.orig/src/promisc.c
++++ iptraf-3.0.0/src/promisc.c
+@@ -32,7 +32,7 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <netinet/in.h>
+-#include <net/if.h>
++#include <linux/if.h>
+ #include <linux/if_ether.h>
+ #include "ifstats.h"
+ #include "ifaces.h"
+@@ -49,7 +49,7 @@
+ {
+     FILE *fd;
+     int ifd;
+-    char buf[8];
++    char buf[18];
+     struct promisc_states *ptmp;
+     struct promisc_states *tail = NULL;
+     struct ifreq ifr;
+@@ -81,6 +81,7 @@
+              */
  
- #####################################################################
- ############### IPTRAF COMPILATION AND LINK RULES
-diff -Nur iptraf-2.7.0.orig/src/dirs.h iptraf-2.7.0/src/dirs.h
---- iptraf-2.7.0.orig/src/dirs.h	Sun May 19 20:47:44 2002
-+++ iptraf-2.7.0/src/dirs.h	Sun May 19 20:52:11 2002
-@@ -26,7 +26,7 @@
+             if ((strncmp(buf, "eth", 3) == 0) ||
++	        (strncmp(buf, "ath", 3) == 0) ||
+                 (strncmp(buf, "fddi", 4) == 0) ||
+                 (strncmp(buf, "tr", 2) == 0) ||
+                 (strncmp(ptmp->params.ifname, "wvlan", 4) == 0) ||
+--- iptraf-3.0.0.orig/src/hostmon.c
++++ iptraf-3.0.0/src/hostmon.c
+@@ -711,7 +711,7 @@
+     int is_ip;
+     int ch;
+ 
+-    char ifname[10];
++    char ifname[18];
+ 
+     struct timeval tv;
+     unsigned long starttime;
+--- iptraf-3.0.0.orig/src/serv.c
++++ iptraf-3.0.0/src/serv.c
+@@ -739,7 +739,7 @@
+     unsigned short linktype;
+     int br;
+ 
+-    char iface[8];
++    char iface[18];
+     unsigned int idx = 1;
+ 
+     unsigned int sport = 0;
+--- iptraf-3.0.0.orig/src/packet.c
++++ iptraf-3.0.0/src/packet.c
+@@ -31,13 +31,12 @@
+ #include <netinet/tcp.h>
+ #include <sys/time.h>
+ #include <net/if_arp.h>
+-#include <net/if.h>
++#include <linux/if.h>
+ #include <sys/ioctl.h>
+ #include <linux/if_packet.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_fddi.h>
+ #include <linux/if_tr.h>
+-#include <linux/isdn.h>
+ #include <linux/sockios.h>
+ #include <msgboxes.h>
+ #include "deskman.h"
+@@ -79,6 +78,8 @@
+     case ARPHRD_ETHER:
+         if (strncmp(ifname, "eth", 3) == 0)
+             result = LINK_ETHERNET;
++	else if (strncmp(ifname, "ath", 3) == 0)
++	    result = LINK_ETHERNET;
+         else if (strncmp(ifname, "plip", 4) == 0)
+             result = LINK_PLIP;
+         else if (strncmp(ifname, "fddi", 4) == 0)       /* For some Ethernet- */
+--- iptraf-3.0.0.orig/src/rvnamed.c
++++ iptraf-3.0.0/src/rvnamed.c
+@@ -219,6 +219,9 @@
+     signal(SIGCHLD, childreap);
+ 
+     logfile = fopen(RVNDLOGFILE, "a");
++    if ( logfile == NULL ) { /* unable to open file -> /dev/null */
++	logfile = fopen("/dev/null", "a");
++    }
+ 
+     if (logfile == NULL)
+         logfile = fopen("/dev/null", "a");
+--- iptraf-3.0.0.orig/src/rvnamed.h
++++ iptraf-3.0.0/src/rvnamed.h
+@@ -1,9 +1,9 @@
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ 
+-#define CHILDSOCKNAME "/dev/rvndcldcomsk"
+-#define PARENTSOCKNAME "/dev/rvndpntcomsk"
+-#define IPTSOCKNAME "/dev/rvndiptcomsk"
++#define CHILDSOCKNAME "/var/run/rvndcldcomsk"
++#define PARENTSOCKNAME "/var/run/rvndpntcomsk"
++#define IPTSOCKNAME "/var/run/rvndiptcomsk"
+ 
+ #define SOCKET_PREFIX	"isock"
+ 
+--- iptraf-3.0.0.orig/src/ifaces.c
++++ iptraf-3.0.0/src/ifaces.c
+@@ -24,7 +24,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
+ #include <netinet/in.h>
+-#include <net/if.h>
++#include <linux/if.h>
+ #include <fcntl.h>
+ #include <string.h>
+ #include <linux/if_packet.h>
+@@ -39,7 +39,7 @@
+ char ifaces[][6] =
+     { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
+     "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
+-    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan"
++    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan", "ath"
+ };
+ 
+ char *ltrim(char *buf)
+@@ -102,7 +102,7 @@
+ int iface_supported(char *iface)
+ {
+     int i;
+-
++    
+     if (accept_unsupported_interfaces)
+         return 1;
+ 
+--- iptraf-3.0.0.orig/src/isdntab.h
++++ iptraf-3.0.0/src/isdntab.h
+@@ -1,3 +1,87 @@
++/* copied from Linux ISDN subsystem for inclusion in iptraf */
++
++/* Linux ISDN subsystem, main header
++ *
++ * Copyright 1994,95,96 by Fritz Elfert (fritz@isdn4linux.de)
++ * Copyright 1995,96    by Thinking Objects Software GmbH Wuerzburg
++ * Copyright 1995,96    by Michael Hipp (Michael.Hipp@student.uni-tuebingen.de)
++ * Copyright 2000-2002  by Kai Germaschewski (kai@germaschewski.name)
++ * 
++ * This software may be used and distributed according to the terms
++ * of the GNU General Public License, incorporated herein by reference.
++ *
++ */
++
++/* Packet encapsulations for net-interfaces */
++#define ISDN_NET_ENCAP_ETHER      0
++#define ISDN_NET_ENCAP_RAWIP      1
++#define ISDN_NET_ENCAP_IPTYP      2
++#define ISDN_NET_ENCAP_CISCOHDLC  3 /* Without SLARP and keepalive */
++#define ISDN_NET_ENCAP_SYNCPPP    4
++#define ISDN_NET_ENCAP_UIHDLC     5
++#define ISDN_NET_ENCAP_CISCOHDLCK 6 /* With SLARP and keepalive    */
++#define ISDN_NET_ENCAP_X25IFACE   7 /* Documentation/networking/x25-iface.txt*/
++#define ISDN_NET_ENCAP_NR         8
++
++/* New ioctl-codes */
++#define IIOCNETAIF  _IO('I',1)
++#define IIOCNETDIF  _IO('I',2)
++#define IIOCNETSCF  _IO('I',3)
++#define IIOCNETGCF  _IO('I',4)
++#define IIOCNETANM  _IO('I',5)
++#define IIOCNETDNM  _IO('I',6)
++#define IIOCNETGNM  _IO('I',7)
++#define IIOCGETSET  _IO('I',8) /* no longer supported */
++#define IIOCSETSET  _IO('I',9) /* no longer supported */
++#define IIOCSETVER  _IO('I',10)
++#define IIOCNETHUP  _IO('I',11)
++#define IIOCSETGST  _IO('I',12)
++#define IIOCSETBRJ  _IO('I',13)
++#define IIOCSIGPRF  _IO('I',14)
++#define IIOCGETPRF  _IO('I',15)
++#define IIOCSETPRF  _IO('I',16)
++#define IIOCGETMAP  _IO('I',17)
++#define IIOCSETMAP  _IO('I',18)
++#define IIOCNETASL  _IO('I',19)
++#define IIOCNETDIL  _IO('I',20)
++#define IIOCGETCPS  _IO('I',21)
++#define IIOCGETDVR  _IO('I',22)
++
++
++typedef struct {
++	char	name[10];	/* Name of interface                     */
++	char	master[10];	/* Name of Master for Bundling           */
++	char	slave[10];	/* Name of Slave for Bundling            */
++	char	eaz[256];	/* EAZ/MSN                               */
++	char	drvid[25];	/* DriverId for Bindings                 */
++	int	onhtime;	/* Hangup-Timeout                        */
++	int	charge;		/* Charge-Units                          */
++	int	l2_proto;	/* Layer-2 protocol                      */
++	int	l3_proto;	/* Layer-3 protocol                      */
++	int	p_encap;	/* Encapsulation                         */
++	int	exclusive;	/* Channel, if bound exclusive           */
++	int	dialmax;	/* Dial Retry-Counter                    */
++	int	slavedelay;	/* Delay until slave starts up           */
++	int	cbdelay;	/* Delay before Callback                 */
++	int	chargehup;	/* Flag: Charge-Hangup                   */
++	int	ihup;		/* Flag: Hangup-Timeout on incoming line */
++	int	secure;		/* Flag: Secure                          */
++	int	callback;	/* Flag: Callback                        */
++	int	cbhup;		/* Flag: Reject Call before Callback     */
++	int	pppbind;	/* ippp device for bindings              */
++	int	chargeint;	/* Use fixed charge interval length      */
++	int	triggercps;	/* BogoCPS needed for triggering slave   */
++	int	dialtimeout;	/* Dial-Timeout                          */
++	int	dialwait;	/* Time to wait after failed dial        */
++	int	dialmode;	/* Flag: off / on / auto                 */
++} isdn_net_ioctl_cfg;
++
++
++
++
++/* end of copied part */
++
++
+ struct isdntabent {
+     char ifname[10];
+     unsigned int encap;
+--- iptraf-3.0.0.orig/src/isdntab.c
++++ iptraf-3.0.0/src/isdntab.c
+@@ -20,7 +20,6 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <sys/ioctl.h>
+-#include <linux/isdn.h>
+ #include "isdntab.h"
+ 
+ 
+--- iptraf-3.0.0.orig/src/pktsize.c
++++ iptraf-3.0.0/src/pktsize.c
+@@ -25,7 +25,7 @@
+ #include <sys/time.h>
+ #include <sys/ioctl.h>
+ #include <sys/socket.h>
+-#include <net/if.h>
++#include <linux/if.h>
+ #include <netinet/in.h>
+ #include <linux/if_ether.h>
+ #include <linux/if_packet.h>
+--- iptraf-3.0.0.orig/src/promisc.h
++++ iptraf-3.0.0/src/promisc.h
+@@ -9,7 +9,7 @@
   */
-  
- #ifndef WORKDIR
--#define WORKDIR		"/var/local/iptraf"
-+#define WORKDIR		"/var/lib/iptraf"
- #endif
  
- #ifndef LOGDIR
-@@ -34,7 +34,7 @@
- #endif
+ struct promisc_params {
+-    char ifname[8];
++    char ifname[18];
+     int saved_state;
+     int state_valid;
+ };
+--- iptraf-3.0.0.orig/src/install.sh
++++ iptraf-3.0.0/src/install.sh
+@@ -18,37 +18,38 @@
+ WORKDIR=$2
+ LOGDIR=$3
+ LOCKDIR=$4
++DESTDIR=$5
  
- #ifndef EXECDIR
--#define EXECDIR		"/usr/local/bin"
-+#define EXECDIR		"/usr/bin"
- #endif
+ echo
+ echo "*** Installing executable programs and preparing work directories"
+ echo
+ echo ">>> Installing iptraf in $TARGET"
+-$INSTALL -m 0700 -o root -g root -s iptraf $TARGET
++$INSTALL -m 0700 -o root -g root -s iptraf $DESTDIR/$TARGET
+ echo ">>> Installing rvnamed in $TARGET"
+-$INSTALL -m 0700 -o root -g root -s rvnamed $TARGET
++$INSTALL -m 0700 -o root -g root -s rvnamed $DESTDIR/$TARGET
  
- /*
-@@ -46,7 +46,7 @@
+-if [ ! -d $WORKDIR ]; then
++if [ ! -d $DESTDIR/$WORKDIR ]; then
+     echo ">>> Creating IPTraf work directory $WORKDIR"
+ else
+     echo ">>> IPTraf work directory $WORKDIR already exists"
+-    rm -f $WORKDIR/othfilter.dat
++    rm -f $DESTDIR/$WORKDIR/othfilter.dat
+ fi
+ 
+-$INSTALL -m 0700 -o root -g root -d $WORKDIR
++$INSTALL -m 0700 -o root -g root -d $DESTDIR/$WORKDIR
+ 
+-if [ ! -d $LOGDIR ]; then
++if [ ! -d $DESTDIR/$LOGDIR ]; then
+     echo ">>> Creating IPTraf log directory $LOGDIR"
+ else
+     echo ">>> IPTraf log directory $LOGDIR already exists"
+ fi
+-$INSTALL -m 0700 -o root -g root -d $LOGDIR
++$INSTALL -m 0700 -o root -g root -d $DESTDIR/$LOGDIR
+ 
+-if [ ! -d $LOCKDIR ]; then
++if [ ! -d $DESTDIR/$LOCKDIR ]; then
+     echo ">>> Creating IPTraf lockfile directory $LOCKDIR"
+ else
+     echo ">>> IPTraf lockfile directory $LOCKDIR already exists"
+ fi
+-$INSTALL -m 0700 -o root -g root -d $LOCKDIR
++$INSTALL -m 0700 -o root -g root -d $DESTDIR/$LOCKDIR
+ echo
+ echo
+ echo "*** iptraf, and rvnamed executables are in $TARGET"
+@@ -56,25 +57,27 @@
+ 
+ ################# Filter clearing for 3.0 ##########################
+ 
+-if [ ! -f $WORKDIR/version ]; then
++if [ ! -f $DESTDIR/$WORKDIR/version ]; then
+     echo ">>> Clearing old filter list"
+-    if [ -f $WORKDIR/tcpfilters.dat ]; then
+-        mv -f $WORKDIR/tcpfilters.dat $WORKDIR/tcpfilters.dat~
++    if [ -f $DESTDIR/$WORKDIR/tcpfilters.dat ]; then
++        mv -f $DESTDIR/$WORKDIR/tcpfilters.dat $DESTDIR/$WORKDIR/tcpfilters.dat~
+     fi
+     
+-    if [ -f $WORKDIR/udpfilters.dat ]; then
+-        mv -f $WORKDIR/udpfilters.dat $WORKDIR/udpfilters.dat~
++    if [ -f $DESTDIR/$WORKDIR/udpfilters.dat ]; then
++        mv -f $DESTDIR/$WORKDIR/udpfilters.dat $DESTDIR/$WORKDIR/udpfilters.dat~
+     fi
+ 
+-    if [ -f $WORKDIR/othipfilters.dat ]; then
+-        mv -f $WORKDIR/othipfilters.dat $WORKDIR/othipfilters.dat~
++    if [ -f $DESTDIR/$WORKDIR/othipfilters.dat ]; then
++        mv -f $DESTDIR/$WORKDIR/othipfilters.dat $DESTDIR/$WORKDIR/othipfilters.dat~
+     fi
+ 
+-    rm -f $WORKDIR/savedfilters.dat
++    rm -f $DESTDIR/$WORKDIR/savedfilters.dat
+ fi
+ ####################################################################
+ 
+-cat version > $WORKDIR/version
++cat version > $DESTDIR/$WORKDIR/version
++
++exit 0
+ 
+ echo 
+ echo
+--- iptraf-3.0.0.orig/src/tr.c
++++ iptraf-3.0.0/src/tr.c
+@@ -7,7 +7,7 @@
   */
-  
- #ifndef LOCKDIR
--#define LOCKDIR		"/var/run/iptraf"
-+#define LOCKDIR		"/var/run"
- #endif
  
- /***
+ #include <asm/types.h>
+-#include <linux/if_tr.h>
++#include <netinet/if_tr.h>
+ #include <netinet/in.h>
+ 
+ unsigned int get_tr_ip_offset(unsigned char *pkt)

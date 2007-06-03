@@ -1,6 +1,5 @@
-diff -urN iptraf-3.0.0.orig/src/ifaces.c iptraf-3.0.0/src/ifaces.c
---- iptraf-3.0.0.orig/src/ifaces.c	2005-09-13 08:42:54.000000000 +0200
-+++ iptraf-3.0.0/src/ifaces.c	2006-04-11 07:57:37.261675250 +0200
+--- iptraf-3.0.0/src/ifaces.c.orig	2007-06-03 19:03:27.312372537 +0000
++++ iptraf-3.0.0/src/ifaces.c	2007-06-03 19:07:20.170408147 +0000
 @@ -32,14 +32,14 @@
  #include "error.h"
  
@@ -13,15 +12,14 @@ diff -urN iptraf-3.0.0.orig/src/ifaces.c iptraf-3.0.0/src/ifaces.c
  char ifaces[][6] =
      { "lo", "eth", "sl", "ppp", "ippp", "plip", "fddi", "isdn", "dvb",
      "pvc", "hdlc", "ipsec", "sbni", "tr", "wvlan", "wlan", "sm2", "sm3",
--    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan"
+-    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan", "ath"
 +    "pent", "lec", "brg", "tun", "tap", "cipcb", "tunl", "vlan", "bond", "ath"
  };
  
  char *ltrim(char *buf)
-diff -urN iptraf-3.0.0.orig/src/packet.c iptraf-3.0.0/src/packet.c
---- iptraf-3.0.0.orig/src/packet.c	2005-09-13 08:42:54.000000000 +0200
-+++ iptraf-3.0.0/src/packet.c	2006-04-11 08:04:50.208732750 +0200
-@@ -90,7 +90,8 @@
+--- iptraf-3.0.0/src/packet.c.orig	2007-06-03 19:03:27.312372537 +0000
++++ iptraf-3.0.0/src/packet.c	2007-06-03 19:03:27.316372709 +0000
+@@ -91,7 +91,8 @@
          else if (strncmp(ifname, "ipsec", 5) == 0)
              result = LINK_ETHERNET;
          else if ((strncmp(ifname, "wvlan", 5) == 0)
