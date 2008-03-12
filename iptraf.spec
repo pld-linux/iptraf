@@ -6,7 +6,7 @@ Summary(ru.UTF-8):	IPTraf - консольная программа монито
 Summary(uk.UTF-8):	IPTraf - консольна програма моніторингу трафіку в мережі
 Name:		iptraf
 Version:	3.0.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://iptraf.seul.org/pub/iptraf/%{name}-%{version}.tar.gz
@@ -74,7 +74,7 @@ cd src
 %{__make} clean
 %{__make} TARGET=%{_sbindir} \
 	CC="%{__cc}" \
-	RPM_OPT_FLAGS="%{rpmcflags}"
+	CFLAGS="%{rpmcflags} -DALLOWUSERS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
