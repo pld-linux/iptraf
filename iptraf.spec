@@ -74,7 +74,8 @@ cd src
 %{__make} clean
 %{__make} TARGET=%{_sbindir} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -DALLOWUSERS"
+	CFLAGS="%{rpmcflags} -DALLOWUSERS" \
+	WORKDIR=/var/lib/iptraf
 
 %install
 rm -rf $RPM_BUILD_ROOT
