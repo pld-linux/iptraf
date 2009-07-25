@@ -345,21 +345,6 @@
      unsigned int sport = 0;
 --- iptraf-3.0.0.orig/src/packet.c
 +++ iptraf-3.0.0/src/packet.c
-@@ -31,13 +31,12 @@
- #include <netinet/tcp.h>
- #include <sys/time.h>
- #include <net/if_arp.h>
--#include <net/if.h>
-+#include <linux/if.h>
- #include <sys/ioctl.h>
- #include <linux/if_packet.h>
- #include <linux/if_ether.h>
- #include <linux/if_fddi.h>
- #include <linux/if_tr.h>
--#include <linux/isdn.h>
- #include <linux/sockios.h>
- #include <msgboxes.h>
- #include "deskman.h"
 @@ -79,6 +78,8 @@
      case ARPHRD_ETHER:
          if (strncmp(ifname, "eth", 3) == 0)
@@ -636,3 +621,13 @@
  #include <netinet/in.h>
  
  unsigned int get_tr_ip_offset(unsigned char *pkt)
+--- iptraf/src/packet.c~	2009-07-25 23:37:07.174013319 +0200
++++ iptraf/src/packet.c	2009-07-25 23:37:20.504011520 +0200
+@@ -37,7 +37,6 @@
+ #include <linux/netdevice.h>
+ #include <linux/if_fddi.h>
+ #include <linux/if_tr.h>
+-#include <linux/isdn.h>
+ #include <linux/sockios.h>
+ #include <msgboxes.h>
+ #include "deskman.h"
