@@ -6,7 +6,7 @@ Summary(ru.UTF-8):	IPTraf - консольная программа монито
 Summary(uk.UTF-8):	IPTraf - консольна програма моніторингу трафіку в мережі
 Name:		iptraf
 Version:	3.0.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Utilities
 Source0:	ftp://iptraf.seul.org/pub/iptraf/%{name}-%{version}.tar.gz
@@ -14,6 +14,7 @@ Source0:	ftp://iptraf.seul.org/pub/iptraf/%{name}-%{version}.tar.gz
 Patch0:		%{name}.patch
 Patch1:		%{name}-iface.patch
 Patch2:		%{name}-show_all_interfaces.patch
+Patch3:		%{name}-strcpy-overlap-memory.patch
 URL:		http://iptraf.seul.org/
 BuildRequires:	ncurses-ext-devel >= 5.4
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -66,13 +67,14 @@ SLIP/PPP.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cd src
 %{__make} clean
 %{__make} TARGET=%{_sbindir} \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -DALLOWUSERS" \
+	CFLAGS="%{rpmcppflags} %{rpmcflags} -DALLOWUSERS" \
 	WORKDIR=/var/lib/iptraf
 
 %install
